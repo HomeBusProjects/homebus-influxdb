@@ -25,6 +25,7 @@ class InfluxDBHomebusApp < Homebus::App
     'org.homebus.experimental.covid-vaccinations',
     'org.homebus.experimental.diagnostic',
     'org.homebus.experimental.h2co-sensor',
+    'org.homebus.experimental.h2s-sensor',
     'org.homebus.experimental.image',
     'org.homebus.experimental.license',
     'org.homebus.experimental.light-sensor',
