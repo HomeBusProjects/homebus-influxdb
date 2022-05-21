@@ -20,12 +20,14 @@ class InfluxDBHomebusApp < Homebus::App
     'org.homebus.experimental.ch4-sensor',
     'org.homebus.experimental.co-sensor',
     'org.homebus.experimental.co2-sensor',
+    'org.homebus.experimental.contact-sensor',
     'org.homebus.experimental.covid-cases',
     'org.homebus.experimental.covid-hospitalizations',
     'org.homebus.experimental.covid-vaccinations',
     'org.homebus.experimental.diagnostic',
     'org.homebus.experimental.h2co-sensor',
     'org.homebus.experimental.h2s-sensor',
+    'org.homebus.experimental.homebus.devices',
     'org.homebus.experimental.image',
     'org.homebus.experimental.license',
     'org.homebus.experimental.light-sensor',
@@ -39,7 +41,9 @@ class InfluxDBHomebusApp < Homebus::App
     'org.homebus.experimental.network-bandwidth',
     'org.homebus.experimental.o2-sensor',
     'org.homebus.experimental.o3-sensor',
+    'org.homebus.experimental.occupancy-sensor',
     'org.homebus.experimental.origin',
+    'org.homebus.experimental.ph-sensor',
     'org.homebus.experimental.radon-sensor',
     'org.homebus.experimental.radiation-sensor',
     'org.homebus.experimental.server-status',
@@ -81,8 +85,6 @@ class InfluxDBHomebusApp < Homebus::App
                                   manufacturer: 'Homebus',
                                   model: 'InfluxDB',
                                   serial_number: ENV['INFLUXDB_URL']
-
-#    _create_buckets
   end
 
   def work!
@@ -129,39 +131,6 @@ class InfluxDBHomebusApp < Homebus::App
     rescue => error
       if @options[:verbose]
         puts "error writing data: #{error.message}"
-      end
-    end
-  end
-
-  def _create_buckets
-    api = InfluxDB2::API::Client.new(@client)
-
-    organization = api.create_organizations_api
-                  .get_orgs
-                  .orgs
-                  .select { |it| it.name == @influxdb_organization }
-                  .first
-
-    image_retention_rule = InfluxDB2::API::RetentionRule.new(type: 'expire', every_seconds: 7 * 24 * 60 * 60)
-    tenyear_retention_rule = InfluxDB2::API::RetentionRule.new(type: 'expire', every_seconds: 10 * 365 * 24 * 60 * 60)
-
-    buckets = api.create_buckets_api.get_buckets(limit: 100)
-
-    DDCS.each do |ddc|
-      if buckets.buckets.select { |b| b.name == ddc }.length > 0
-        next
-      end
-
-      if ddc == 'org.experimental.homebus.image'
-        request = InfluxDB2::API::PostBucketRequest.new(org_id: organization.id,
-                                                        name: ddc,
-                                                        retention_rules: [image_retention_rule])
-        bucket = api.create_buckets_api.post_buckets(request)
-      else
-        request = InfluxDB2::API::PostBucketRequest.new(org_id: organization.id,
-                                                        name: ddc,
-                                                        retention_rules: [])
-        bucket = api.create_buckets_api.post_buckets(request)
       end
     end
   end
