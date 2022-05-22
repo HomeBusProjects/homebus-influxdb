@@ -85,6 +85,9 @@ class InfluxDBHomebusApp < Homebus::App
                                   manufacturer: 'Homebus',
                                   model: 'InfluxDB',
                                   serial_number: ENV['INFLUXDB_URL']
+
+    @ddcs = DDCS
+    @device_name_map = {}
   end
 
   def work!
@@ -96,6 +99,11 @@ class InfluxDBHomebusApp < Homebus::App
   end
 
   def receive!(msg)
+    if msg[:ddc] == 'org.homebus.experimental.homebus.devices'
+      _process_devices(msg[:payload])
+      return
+    end
+
     # we don't currently store arrays
     if msg[:payload].class != Hash
       return
@@ -104,6 +112,11 @@ class InfluxDBHomebusApp < Homebus::App
     data = InfluxDB2::Point.new(name: msg[:ddc])
                                   .add_tag('source', msg[:source])
                                   .time(Time.at(msg[:timestamp]), InfluxDB2::WritePrecision::SECOND)
+
+    name = @device_name_map[msg[:source]]
+    if name
+      data.add_tag('name', @device_name_map[msg[:source]])
+    end
 
     if @options[:verbose]
       puts "PAYLOAD from #{msg[:source]} - #{msg[:ddc]} at #{Time.at(msg[:timestamp]).to_s}"
@@ -133,6 +146,18 @@ class InfluxDBHomebusApp < Homebus::App
         puts "error writing data: #{error.message}"
       end
     end
+  end
+
+  def _process_devices(msg)
+    devices = {}
+    publish_ddcs = []
+    msg[:devices].each do |device|
+      publish_ddcs += device[:publishes]
+      devices[device[:id]] = device[:name]
+    end
+
+    @ddcs = publish_ddcs.sort.uniq
+    @device_name_map = devices
   end
 
   def name
