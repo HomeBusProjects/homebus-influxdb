@@ -17,6 +17,7 @@ class InfluxDBHomebusApp < Homebus::App
     'org.homebus.experimental.alert',
     'org.homebus.experimental.aqi-pm25',
     'org.homebus.experimental.aqi-o3',
+    'org.homebus.experimental.ccs811-sensor',
     'org.homebus.experimental.ch4-sensor',
     'org.homebus.experimental.co-sensor',
     'org.homebus.experimental.co2-sensor',
@@ -158,6 +159,8 @@ class InfluxDBHomebusApp < Homebus::App
 
     @ddcs = publish_ddcs.sort.uniq
     @device_name_map = devices
+
+    File.write('network.json', JSON.pretty_generate({ devices: devices, published_ddcs: @ddcs}))
   end
 
   def name

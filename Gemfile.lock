@@ -23,6 +23,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-20
+  arm64-darwin-21
 
 DEPENDENCIES
   dotenv
@@ -31,4 +32,4 @@ DEPENDENCIES
   influxdb-client-apis (~> 2.0.0)
 
 BUNDLED WITH
-   2.3.6
+   2.3.5
