@@ -60,7 +60,8 @@ class InfluxDBHomebusApp < Homebus::App
     'org.homebus.experimental.uv-light-sensor',
     'org.homebus.experimental.voc-sensor',
     'org.homebus.experimental.weather',
-    'org.homebus.experimental.weather-forecast'
+    'org.homebus.experimental.weather-forecast',
+    "com.romkey.test.dfrobot-invalid"
   ]
 
   def initialize(options)
