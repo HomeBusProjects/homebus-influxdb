@@ -48,6 +48,7 @@ class InfluxDBHomebusApp < Homebus::App
     'org.homebus.experimental.radon-sensor',
     'org.homebus.experimental.radiation-sensor',
     'org.homebus.experimental.server-status',
+    'org.homebus.experimental.so2-sensor',
     'org.homebus.experimental.soil-sensor',
     'org.homebus.experimental.solar-clock',
     'org.homebus.experimental.switch',
