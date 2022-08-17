@@ -62,7 +62,11 @@ class InfluxDBHomebusApp < Homebus::App
     'org.homebus.experimental.voc-sensor',
     'org.homebus.experimental.weather',
     'org.homebus.experimental.weather-forecast',
-    "com.romkey.test.dfrobot-invalid"
+    'com.romkey.test.dfrobot-invalid',
+    'org.homebus.experimental.gas-meter',
+    'org.homebus.experimental.power-flow',
+    'org.homebus.experimental.water-flow',
+    'org.homebus.experimental.hmpxv-cases'
   ]
 
   def initialize(options)
@@ -98,7 +102,13 @@ class InfluxDBHomebusApp < Homebus::App
       @device.provision.broker.subscribe!(ddc)
     end
 
-    listen!
+    loop do
+      begin
+        listen!
+      rescue Homebus::Broker::ReceiveBadJSON
+        puts "sadly we have received a malformed JSON message"
+      end
+    end
   end
 
   def receive!(msg)
