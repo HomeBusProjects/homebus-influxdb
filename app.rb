@@ -14,6 +14,7 @@ class InfluxDBHomebusApp < Homebus::App
     'org.pdxhackerspace.experimental.access',
     'org.homebus.experimental.air-quality-sensor',
     'org.homebus.experimental.air-sensor',
+    'org.homebus.experimental.airflow-sensor',
     'org.homebus.experimental.alert',
     'org.homebus.experimental.aqi-pm25',
     'org.homebus.experimental.aqi-o3',
