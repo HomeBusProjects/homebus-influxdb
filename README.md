@@ -1,5 +1,8 @@
 # homebus-influxdb
 
+![rspec](https://github.com/github/docs/actions/workflows/rspec.yml/badge.svg)
+
+
 This is a simple HomeBus component which subscribes to all the topics
 available on a network and records all incoming data to InfluxDB.
 
