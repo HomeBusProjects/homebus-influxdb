@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/HomeBusProjects/ruby-homebus
-  revision: 400534a58fab1b9537002aa9620e9afc77df8f08
+  revision: c231072e715e142c3cd17fd25d42ecd04b0a3397
   branch: main
   specs:
-    homebus (0.40.0)
+    homebus (0.40.1)
       paho-mqtt (~> 1.0.12)
 
 PATH

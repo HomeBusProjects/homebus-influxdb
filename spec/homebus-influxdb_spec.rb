@@ -4,6 +4,15 @@ require 'homebus-influxdb/version'
 require 'homebus-influxdb/options'
 require 'homebus-influxdb/app'
 
+class TestHomebusInfluxdbApp < HomebusInfluxdb::App
+  # override config so that the superclasses don't try to load it during testing
+  def initialize
+    @config = Hash.new
+    @store = Hash.new
+    super
+  end
+end
+
 describe HomebusInfluxdb do
   context "Version number" do
     it "Has a version number" do
