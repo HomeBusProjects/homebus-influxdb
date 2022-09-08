@@ -1,6 +1,6 @@
 # homebus-influxdb
 
-![rspec](https://github.com/github/docs/actions/workflows/rspec.yml/badge.svg)
+![rspec](https://github.com/HomeBusProjects/homebus-influxdb/actions/workflows/rspec.yml/badge.svg)
 
 
 This is a simple HomeBus component which subscribes to all the topics
