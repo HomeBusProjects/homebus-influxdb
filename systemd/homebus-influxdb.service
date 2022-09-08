@@ -1,16 +1,13 @@
 [Unit]
-Description=Homebus InfluxDB recorder
+Description=HomeBus publisher
 After=network.target
 
 [Service]
 Type=simple
-
 User=homebus
 WorkingDirectory=/home/homebus/homebus-influxdb
-
-ExecStart=/home/homebus/.rbenv/bin/rbenv exec bundle exec homebus-influxdb.rb
+ExecStart=/home/homebus/.rbenv/bin/rbenv exec bundle exec bin/homebus-influxdb
 TimeoutSec=30
-
 Restart=always
 
 [Install]

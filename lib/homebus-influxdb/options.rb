@@ -1,6 +1,8 @@
 require 'homebus'
 
-class InfluxDBHomebusAppOptions < Homebus::Options
+require 'homebus-influxdb/version'
+
+class HomebusInfluxdb::Options < Homebus::Options
   def app_options(op)
   end
 
@@ -9,7 +11,7 @@ class InfluxDBHomebusAppOptions < Homebus::Options
   end
 
   def version
-    '0.0.1'
+    HomebusInfluxdb::VERSION
   end
 
   def name

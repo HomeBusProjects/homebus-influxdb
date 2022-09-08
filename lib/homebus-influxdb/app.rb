@@ -7,7 +7,7 @@ require 'influxdb-client-apis'
 
 require 'time'
 
-class InfluxDBHomebusApp < Homebus::App
+class HomebusInfluxdb::App < Homebus::App
   DDCS = [
     'org.homebus.experimental.3dprinter',
     'org.homebus.experimental.3dprinter-completed-job',
