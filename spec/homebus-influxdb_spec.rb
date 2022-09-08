@@ -4,10 +4,27 @@ require 'homebus-influxdb/version'
 require 'homebus-influxdb/options'
 require 'homebus-influxdb/app'
 
+require 'homebus/config'
+
 class TestHomebusInfluxdbApp < HomebusInfluxdb::App
   # override config so that the superclasses don't try to load it during testing
-  def initialize
+  def initialize(options)
     @config = Hash.new
+    @config = Homebus::Config.new
+
+    @config.login_config = {
+                            "default_login": 0,
+                            "next_index": 1,
+                            "homebus_instances": [
+                                      {
+                                        "provision_server": "https://homebus.org",
+                                       "email_address": "example@example.com",
+                                       "token": "XXXXXXXXXXXXXXXX",
+                                       "index": 0
+                                      }
+                                    ]
+    }
+
     @store = Hash.new
     super
   end
@@ -50,7 +67,7 @@ end
 describe HomebusInfluxdb::App do
   context "Methods" do
     options = HomebusInfluxdb::Options.new
-    app = HomebusInfluxdb::App.new(options)
+    app = TestHomebusInfluxdbApp.new(options)
 
     it "Has a name" do
       expect(app.name).not_to be_nil
