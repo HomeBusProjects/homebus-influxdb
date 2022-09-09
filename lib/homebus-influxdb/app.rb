@@ -7,6 +7,10 @@ require 'influxdb-client-apis'
 
 require 'time'
 
+module PahoMqtt
+  MAX_SUBACK   = 100
+end
+
 class HomebusInfluxdb::App < Homebus::App
   DDCS = [
     'org.homebus.experimental.3dprinter',
