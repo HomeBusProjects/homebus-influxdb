@@ -71,7 +71,8 @@ class HomebusInfluxdb::App < Homebus::App
     'org.homebus.experimental.gas-meter',
     'org.homebus.experimental.power-flow',
     'org.homebus.experimental.water-flow',
-    'org.homebus.experimental.hmpxv-cases'
+    'org.homebus.experimental.hmpxv-cases',
+    'org.homebus.experimental.clock-drift'
   ]
 
   def initialize(options)
